@@ -39,11 +39,11 @@ class Product extends React.Component {
                             <small className="text-muted">
                                 quantity:pc(s){this.props.product.qty}
                             </small></p>
-                        <button className="btn btn-success" onClick={() => this.props.onAddToCart()}>
+                     <Link to='/Cart'>   <button className="btn btn-success" onClick={() => this.props.onAddToCart()}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-cart-fill" viewBox="0 0 16 16">
                                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                             </svg>
-                            Add To Cart</button>
+                            Add To Cart</button></Link>
                     </div>
                 </div>
             </div>
@@ -173,10 +173,10 @@ class Cart extends React.Component {
     render() {
         return (
             <div>
-                <Link to='/'>homepage</Link>
+               
                 <h3>My Cart</h3>
                 <p>empty card</p>
-
+                <Link to='/'>homepage</Link>
             </div>
 
         );
@@ -287,7 +287,7 @@ const App = () => {
                 {/*productdetails route*/}
                 <Route path="/products/:id"><ProductDetail /></Route>
                 {/*cart route*/}
-                <Route path='/Cart'>Cart</Route>
+                {/* <Route path='/cart'>Cart</Route> */}
             </Switch>
         </Router>
 
