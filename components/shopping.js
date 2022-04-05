@@ -53,67 +53,73 @@ class Product extends React.Component {
 }
 
 class ProductDetail extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            product:{}
+        }
+    }
     async getProductById (id) {
         let product ={}
         try {
             const response = await fetch("/data/products.json");
             const products = await response.json();
             // console.log(products)
-            console.log(id);
+            // console.log(id);
             product = products.find(p => p.id == id);
-            console.log(product);
+            // console.log(product);
         }catch (error) {
             console.log(error);
         }
         return product;
     }
-    render() {
-    //    const {id} = this.props.match.params.id;
-    //    this.getProductById(id);
-    //    console.log(this.getProductById(id))
-   
-  
-    //    <div>
-    //        <div className="container">
-    //            <div className='row'>
-    //                <div className='col-3 order'>
-    //                    <img src='' alt=''/>
-    //                </div>
-    //                <div className='col-6 border'>
-    //                    <div className='title'>name</div>
-    //                    <div className=''>Description</div>
-    //                    <div className=''>price</div>
-    //                    <div className=''>qty</div>
-    //                    <button className='btn btn-success'>Add to Cart</button>
-    //                </div>
+        async componentDidMount(){
+      try{
+    const { id } = this.props.match.params;
+            const product = await this.getProductById(id);
+            this.setState({
+                product,
+            });
 
-    //            </div>
-    //        </div>
-    //    </div>
+        }catch(error){
+            console.log(error)
+        }
+    }
+    render() {
+  
+        console.log(this.state)
+    // const {image, title, description, price }
+   
         return (
             <div style={{marginTop:'60px'}}>
-                {/* <p>Our ProductDetails</p>
+                 <Link to='/' className=" bton">HOME</Link>
+                <p className=" title text-center">Our ProductDetails</p>
                 <div className="container">
-               <div className='row'>
-                   <div className='col-4 '>
-                        <img src={this.props.image}  className='card.img'alt=''/>
+               <div className="row border">
+                   <div className="col-4 border">
+                        <img src={this.state.product.image}  className="card.img"alt=''
+                         style={{ height: "35vh" }}
+                        />
                     </div>
-                    <div className='col-8 '>
-                        <div className='title'>{this.props.title}</div>
-                        <div className=''>{this.props.Description}</div>
-                        <div className=''>{this.props.price}</div>
-                        <div className=''>{this.props.qty}</div>
+                    <div className="col-8 border">
+                        <div className="title">{this.state.product.title}</div>
+                        <div>{this.state.product.description}</div>
+                        <div>${this.state.product.price}</div>
+                        <div>{this.state.product.qty}</div>
+                       
                         <button className='btn btn-success'>Add to Cart</button>
                     </div>
 
                 </div>
-           </div> */}
-                <Product product={Product} />
-                <Link to='/'>HOME</Link>
+           </div>
+                {/* <Product product={Product} /> */}
+               
             </div>
         )
     }
 }
+
+ProductDetail = withRouter(ProductDetail)
 
 class Shop extends React.Component {
     handleAddToCart = () => {
@@ -233,6 +239,7 @@ class Shopping extends React.Component {
     }
     async componentDidMount() {
         try {
+            
             const products = await this.getProducts();
             const wallet = await this.getWallet();
             this.setState({
