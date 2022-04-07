@@ -3,7 +3,7 @@
 .card:hover {
     box-shadow: 0px 1.5rem 3rem rgba(0, 0, 0, 0.15);
     
-    background-color: rgb(236, 75, 102);
+    background-color: rgb(124, 221, 245);
     color: #fff;
     
   }
@@ -33,5 +33,12 @@
   .bton{
     margin-left: 34em;
     margin-top: 20px;
+  }
+  .prize__percent2{
+    color:orange;
+    font-weight: bolder;
+    font-size: 20px;
+    position: absolute;
+   
   }
   

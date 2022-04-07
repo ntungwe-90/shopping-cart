@@ -8,11 +8,9 @@ const {
 } = ReactRouterDOM;
 
 class Product extends React.Component {
-    handleAddToCart = () => {
-
-        alert("product added")
-
-    };
+    constructor(props){
+        super(props)
+    }
     render() {
         return (
             <div className="col-4 mb-4">
@@ -39,11 +37,7 @@ class Product extends React.Component {
                             <small className="text-muted">
                                 quantity:pc(s){this.props.product.qty}
                             </small></p>
-                        <button className="btn btn-success" onClick={() => this.props.onAddToCart()}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-cart-fill" viewBox="0 0 16 16">
-                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                            </svg>
-                            Add To Cart</button>
+                       <AddToCart onAddToCart={this.props.onAddToCart}/>
                     </div>
                 </div>
             </div>
@@ -87,26 +81,29 @@ class ProductDetail extends React.Component {
     }
     render() {
   
-        console.log(this.state)
+        // console.log(this.state)
     // const {image, title, description, price }
    
         return (
-            <div style={{marginTop:'60px'}}>
+            <div style={{marginTop:'60px',backgroundColor:"lightgrey"}}>
                  <Link to='/' className=" bton">HOME</Link>
                 <p className=" title text-center">Our ProductDetails</p>
                 <div className="container">
                <div className="row border">
                    <div className="col-4 border">
+                   <div className="prize__percent2">20%off </div>
                         <img src={this.state.product.image}  className="card.img"alt=''
                          style={{ height: "35vh" }}
                         />
+                        
                     </div>
-                    <div className="col-8 border">
-                        <div className="title">{this.state.product.title}</div>
-                        <div>{this.state.product.description}</div>
-                        <div>${this.state.product.price}</div>
-                        <div>{this.state.product.qty}</div>
-                       
+                    <div className="col-8 border ">
+                        <h2 className="title ">{this.state.product.title}</h2>
+                        <div className="text-truncate">{this.state.product.description}</div>
+                        <div>${this.state.product.price}</div> <br></br>
+                        <div>{this.state.product.category}</div> <br></br>
+                        <div><button className="btn btn-danger">{this.state.product.qty}pieces left</button></div>
+                      <br></br>
                         <button className='btn btn-success'>Add to Cart</button>
                     </div>
 
@@ -129,10 +126,10 @@ class Shop extends React.Component {
     };
     render() {
         return (
-            <div className="col-8 border" style={{ backgroundColor: "#61dafb" }}>
+            <div className="col-8 border" style={{ backgroundColor: "rgb(141, 159, 161)" }}>
                 <div className="row">
                     {this.props.products.map((product) =>
-                        <Product key={product.id} product={product} onAddToCart={this.props.onAddToCart} />
+                        <Product key={product.id} product={product} onAddToCart={() => this.props.onAddToCart(product)} />
                     )}
 
                 </div>
@@ -144,11 +141,16 @@ class Shop extends React.Component {
 
 
 class Sidebar extends React.Component {
+   
     render() {
+        // console.log(this.props)
         return (
             <div className="col-4">
                 <Wallet wallet={this.props.wallet} />
-                <Cart />
+                <Cart cart={this.props.cart}  />
+                 {/* wallet={this.props.wallet} cart={this.props.cart} onIncrease={this.props.onIncrease}
+                 onDecrease={this.props.onDecrease} onDelete={this.props.onDelete} */}
+               
                 <Basket />
             </div>
         );
@@ -176,18 +178,84 @@ class Wallet extends React.Component {
     }
 }
 class Cart extends React.Component {
+    constructor(props){
+        super(props)
+    }
     render() {
+    
         return (
-            <div>
+            <div className="row border">
+                <div className="col 3">
                 <Link to='/'>homepage</Link>
                 <h3>My Cart</h3>
-                <p>empty card</p>
-
+                {this.props.cart.map((item) =>(
+                    <CartItem key={item.id} item={item}  />
+                   
+                    
+                ))}
+                </div>
             </div>
 
         );
     }
 }
+
+class CartItem extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    
+    render(){
+        console.log(this.props)
+        return(
+            <div className="col-4">
+                <h5>cart items</h5>
+                <div className="card">
+                    <div className="card-body">
+                    <img
+                        className="bd-placeholder-img card-img-top"
+                        src={this.props.item.image}
+                        style={{ height: "15vh" }}
+                        alt="..."
+
+                    />
+                        <p className="card-title text-truncate">{this.props.item.title}</p>
+                        <p className="card-text"><strong>${this.props.item.price}</strong></p>
+                        <p className="card-text">{this.props.item.category}</p>
+
+                        <p className="card-text">
+                            <small className="text-muted">
+                                Quantity:{this.props.item.cqty}
+                            </small>
+                        </p>
+                        <div className="d-flex justify-contenet-between  ">
+                        <button className="btn btn-primary" >+</button><br/>
+                        <button className="btn btn-warning" >-</button><br/>
+                        <button className="btn btn-danger" >d</button><br/>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        )
+    }
+}
+
+class AddToCart extends React.Component{
+    render(){
+        return(
+      
+            <button className="btn btn-success" onClick={this.props.onAddToCart}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-cart-fill" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </svg>
+            Add To Cart</button>
+      
+        )
+    }
+}
+
+
 
 class Basket extends React.Component {
     render() {
@@ -260,13 +328,10 @@ class Shopping extends React.Component {
      * created a
      */
 
-    handleAddToCart = () => {
-
-        alert("product added")
-
-    };
+    
 
     render() {
+        // console.log(this.props)
 
         return (
             <>
@@ -275,8 +340,10 @@ class Shopping extends React.Component {
                         Enjoy yourself while shopping. Its affordable
                     </h1>
 
-                    <Shop products={this.state.products} onAddToCart={this.handleAddToCart} />
-                    <Sidebar wallet={this.state.wallet} />
+                    <Shop products={this.state.products} onAddToCart={this.props.onAddToCart} />
+                    <Sidebar wallet={this.state.wallet}  cart={this.props.cart}/>
+                    
+                    
                 </div>
             </>
 
@@ -284,22 +351,75 @@ class Shopping extends React.Component {
     }
 }
 
-const App = () => {
-    return (
+class App  extends React.Component {
+    constructor(props){
+        super(props)
+        this.state ={
+            cart:[],
+        };
+        this.handleAddToCart= this.handleAddToCart.bind(this)
+    } 
 
-        <Router>
-            <Switch>
-                {/*hompage route*/}
-                <Route path="/" exact><Shopping /></Route>
-                {/*productdetails route*/}
-                <Route path="/products/:id"><ProductDetail /></Route>
-                {/*cart route*/}
-                <Route path='/Cart'>Cart</Route>
-            </Switch>
-        </Router>
+    // handleIncrease(){
+    //     alert("increased")
+    // }
+    //  handleDecrease(){
+    //      alert("reduced")
+    //  }
+    //  handleDelete(){
+    //      alert("deleted")
+    //  }
+     /** steps to add product to cart
+      *1 if qty is > 1
+      *2 if product is instock 
+      * spread operator makes a copy and then we append
+      
+      * add our cart to cart array
+      */
+    handleAddToCart =(product)=>{
+       if (product.qty >=1){
+        const available = this.state.cart.find((item) => item.id === product.id);
+      if(available){
+        alert("product exist in cart") 
+      }else{
+         
+          let CartItem = {...product, cqty:1};
+          let cart = [...this.state.cart, CartItem];
+          this.setState({
+              cart:cart,
+          })
+      }
+       
+    }
+    }
+    render(){
+        return (
 
-    )
-}
+            <Router>
+                <Switch>
+                    {/*hompage route*/}
+                    <Route path="/" exact>
+                        <Shopping onAddToCart={this.handleAddToCart}
+                        cart ={this.state.cart}
+                        />
+                        {/* cart={this.state.cart}
+                        onIncrease={this.handleIncrease}
+                        onDecrease={this.handleDecrease}
+                        onDelete={this.handleDelete} */}
+                        </Route>
+                    {/*productdetails route*/}
+                    <Route path="/products/:id"><ProductDetail /></Route>
+                    {/*cart route*/}
+                    <Route path='/Cart'>Cart</Route>
+                    <Route path='/CartItem'>Cartitems</Route>
+
+                </Switch>
+            </Router>
+    
+        )
+    }
+    }
+   
 
 
 
