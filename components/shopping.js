@@ -37,7 +37,15 @@ class Product extends React.Component {
                             <small className="text-muted">
                                 quantity:pc(s){this.props.product.qty}
                             </small></p>
+<<<<<<< HEAD
                         <AddToCart onAddToCart={this.props.onAddToCart} />
+=======
+                     <Link to='/Cart'>   <button className="btn btn-success" onClick={() => this.props.onAddToCart()}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-cart-fill" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </svg>
+                            Add To Cart</button></Link>
+>>>>>>> e3a28d751813d680adb1ac37fb5a1fbe1e5180de
                     </div>
                 </div>
             </div>
@@ -186,6 +194,7 @@ class Cart extends React.Component {
         super(props)
     }
     render() {
+<<<<<<< HEAD
 
         return (
             <div className="row border">
@@ -208,6 +217,14 @@ class Cart extends React.Component {
                     {/* <Link to='/cart'>View Cart</Link> */}
                     
                 </div>
+=======
+        return (
+            <div>
+               
+                <h3>My Cart</h3>
+                <p>empty card</p>
+                <Link to='/'>homepage</Link>
+>>>>>>> e3a28d751813d680adb1ac37fb5a1fbe1e5180de
             </div>
 
         );
@@ -389,6 +406,7 @@ class Shopping extends React.Component {
     }
 }
 
+<<<<<<< HEAD
 class App extends React.Component {
     constructor(props) {
         super(props)
@@ -507,6 +525,23 @@ class App extends React.Component {
 
         )
     }
+=======
+const App = () => {
+    return (
+
+        <Router>
+            <Switch>
+                {/*hompage route*/}
+                <Route path="/" exact><Shopping /></Route>
+                {/*productdetails route*/}
+                <Route path="/products/:id"><ProductDetail /></Route>
+                {/*cart route*/}
+                {/* <Route path='/cart'>Cart</Route> */}
+            </Switch>
+        </Router>
+
+    )
+>>>>>>> e3a28d751813d680adb1ac37fb5a1fbe1e5180de
 }
 
 
