@@ -100,7 +100,7 @@ class ProductDetail extends React.Component {
                         <div className="col-8 border ">
                             <h2 className="title ">{this.state.product.title}</h2>
                             <div className="text-truncate">{this.state.product.description}</div>
-                            <h1><strong></strong></h1> 
+                            <h1><strong></strong></h1>
                             <div>{this.state.product.category}</div> <br></br>
                             <div><button className="btn btn-danger">{this.state.product.qty}pieces left</button></div>
                             <br></br>
@@ -130,8 +130,8 @@ class Shop extends React.Component {
                 <div className="row">
                     {this.props.products.map((product) =>
                         <Product key={product.id} product={product} onAddToCart={() => this.props.onAddToCart(product)}
-                        
-                          />
+
+                        />
                     )}
 
                 </div>
@@ -147,16 +147,18 @@ class Sidebar extends React.Component {
     render() {
         // console.log(this.props)
         return (
+
             <div className="col-4">
                 <Wallet wallet={this.props.wallet} />
-                <Cart cart={this.props.cart} 
-                onIncrease={this.props.onIncrease}
-                onDecrease={this.props.onDecrease} 
-                onDelete={this.props.onDelete} 
-                onClearCart = {this.props.onClearCart}
+                <Cart cart={this.props.cart}
+                    onIncrease={this.props.onIncrease}
+                    onDecrease={this.props.onDecrease}
+                    onDelete={this.props.onDelete}
+                    onClearCart={this.props.onClearCart}
                 />
                 <Basket />
             </div>
+
         );
     }
 }
@@ -190,23 +192,23 @@ class Cart extends React.Component {
         return (
             <div className="row border">
                 <div className="col 3">
-                   
+
                     <h3>My Cart</h3>
                     {this.props.cart.map((item) => (
-                        <CartItem key={item.id} item={item} 
-                        onIncrease={this.props.onIncrease}
-                        onDecrease={this.props.onDecrease}
-                        onDelete={this.props.onDelete}
-                        onClearCart={this.props.onClearCart}
-                       
+                        <CartItem key={item.id} item={item}
+                            onIncrease={this.props.onIncrease}
+                            onDecrease={this.props.onDecrease}
+                            onDelete={this.props.onDelete}
+                            onClearCart={this.props.onClearCart}
+
                         />
 
-                           
+
                     ))}
-                    <button  onClick={()=>this.props.onClearCart(this.props.item)}>Clear Cart</button>
+
                     <Link to='/'>homepage</Link>
                     {/* <Link to='/cart'>View Cart</Link> */}
-                    
+
                 </div>
             </div>
 
@@ -221,20 +223,21 @@ class CartItem extends React.Component {
 
     render() {
         return (
-            
+
             <div className="col-4 mb-4">
                 <h5>cart items</h5>
-                <div className="card">
-                    <div className="card-body">
+                <div className=" ">
+                    <div className="card-body flex">
                         <img
                             className="bd-placeholder-img card-img-top"
                             src={this.props.item.image}
                             style={{ height: "15vh" }}
                             alt="..."
-
-                        />
+                         />
                         <p className="card-title text-truncate">{this.props.item.title}</p>
+
                         <p className="card-text"><strong>${this.props.item.price}</strong></p>
+
                         <p className="card-text">{this.props.item.category}</p>
 
                         <p className="card-text">
@@ -242,15 +245,28 @@ class CartItem extends React.Component {
                                 Quantity:{this.props.item.cqty}
                             </small>
                         </p>
-                        <div className="d-flex justify-contenet-between  ">
-                            <button className=""  onClick={()=>this.props.onIncrease(this.props.item)}>+</button><br />
-                            <button className="" onClick={()=>this.props.onDecrease(this.props.item)}>-</button><br />
-                            <button className="" onClick={()=>this.props.onDelete(this.props.item)}>Delete</button><br />
-                           
-                           
+
+                        <div className="btn-group" role="group" aria-label="Basic example">
+                            <button className="btn btn-primary" onClick={() => this.props.onIncrease(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-plus" viewBox="0 0 16 16">
+                                <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z" />
+                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
+                            </svg></button><br />
+                            <button className="btn btn-success" onClick={() => this.props.onDecrease(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-minus" viewBox="0 0 16 16">
+                                <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z" />
+                                <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z" />
+                                <path d="M6 8a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1H6Z" />
+                            </svg></button><br />
+                            <button className="btn btn-danger" onClick={() => this.props.onDelete(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                            </svg></button><br />
+
+
 
                         </div>
+
+
                     </div>
+                    <button className="btn btn-warning lg1" onClick={() => this.props.onClearCart(this.props.item)}>Clear Cart</button>
                 </div>
 
             </div>
@@ -258,11 +274,12 @@ class CartItem extends React.Component {
     }
 }
 
+
 class RemoveCartItem extends React.Component {
     render() {
         return (
             <>
-                <button className="" 
+                <button className=""
                 // onClick={this.props.onRemoveToCart}
                 >Remove CartItem</button><br />
             </>
@@ -370,15 +387,15 @@ class Shopping extends React.Component {
                         Enjoy yourself while shopping. Its affordable
                     </h1>
 
-                    <Shop products={this.state.products} onAddToCart={this.props.onAddToCart} 
-                   
+                    <Shop products={this.state.products} onAddToCart={this.props.onAddToCart}
+
                     //  onRemoveToCart={this.props.onRemoveToCart}
-                      />
+                    />
                     <Sidebar wallet={this.state.wallet} cart={this.props.cart}
-                     onIncrease={this.props.onIncrease}
-                     onDecrease={this.props.onDecrease} 
-                     onDelete={this.props.onDelete} 
-                     onClearCart={this.props.onClearCart}
+                        onIncrease={this.props.onIncrease}
+                        onDecrease={this.props.onDecrease}
+                        onDelete={this.props.onDelete}
+                        onClearCart={this.props.onClearCart}
                     />
 
 
@@ -395,22 +412,19 @@ class App extends React.Component {
         this.state = {
             cart: [],
         };
-        
-        this.handleAddToCart = this.handleAddToCart.bind(this)
-        // this.handleIncrease = this.handleIncrease.bind(this)
-        // this.handleDecrease = this.handleDecrease.bind(this)
-        // this.handleDelete = this.handleDelete.bind(this)
-        // this.handleClearCart = this.handleClearCart(this)
-        
-    }
-/** steps for increase and decress
-1 check if products quantity is grater than 1
- 2 seearch cart to find product id  or if product exist
- 3 add if product exist bby mapping through 
- 4 
-*/
 
-   
+        this.handleAddToCart = this.handleAddToCart.bind(this)
+
+
+    }
+    /** steps for increase and decress
+    1 check if products quantity is grater than 1
+     2 seearch cart to find product id  or if product exist
+     3 add if product exist bby mapping through 
+     4 
+    */
+
+
     /** steps to add product to cart
      *1 if qty is > 1
      *2 if product is instock 
@@ -434,71 +448,76 @@ class App extends React.Component {
 
         }
     }
-   
-    handleIncrease = (product) =>{
+
+    handleIncrease = (product) => {
         if (product.qty >= 1) {
-           
+
             const exist = this.state.cart.find((item) => item.id === product.id)
-            
-            if(exist){
-                
-             let cart = this.state.cart.map((item)=> item.id === product.id ?{...exist, cqty:exist.cqty + 1} : item)
-            
-             this.setState({
 
-                cart:cart
+            if (exist) {
 
-            })
-           
+                let cart = this.state.cart.map((item) => item.id === product.id ? { ...exist, cqty: exist.cqty + 1 } : item)
+
+                this.setState({
+
+                    cart: cart
+
+                })
+
             }
         }
-     }
-      handleDecrease = (product) =>{
-         if (product.qty >=1){
-             const noexist = this.state.cart.find((item) =>item.id ===product.id);
-             if(noexist){
-             let cart = this.state.cart.map((item)=> item.id === product.id ?{...noexist, cqty:noexist.cqty - 1} : item)
-             this.setState({cart:cart})
-             }
-         }
-      }
-      handleDelete = (product) =>{
-          if (product) {
-              if (product.qty >= 1){
-           let cart = this.state.cart.filter(item => item.id !== product.id)
-          this.setState({
-              cart:cart})
-         
-      }
     }
-}
-      handleClearCart = (product) => {
-          alert("card has been cleared")
-      }
+    handleDecrease = (product) => {
+        if (product.qty >= 1) {
+            const noexist = this.state.cart.find((item) => item.id === product.id);
+            if (noexist) {
+                let cart = this.state.cart.map((item) => item.id === product.id ? { ...noexist, cqty: noexist.cqty - 1 } : item)
+                this.setState({ cart: cart })
+            }
+        }
+    }
+    handleDelete = (product) => {
+        if (product) {
+            if (product.qty >= 1) {
+                let cart = this.state.cart.filter(item => item.id !== product.id)
+                this.setState({
+                    cart: cart
+                })
+
+            }
+        }
+    }
+    handleClearCart = (product) => {
+        //       alert("card has been cleared")
+        let cart = []
+        this.setState({
+            cart: cart
+        })
+    }
     render() {
-      
+
         return (
 
             <Router>
                 <Switch>
                     {/*hompage route*/}
                     <Route path="/" exact>
-                        <Shopping 
-                        onAddToCart={this.handleAddToCart}
-                        cart={this.state.cart}
-                        onIncrease={this.handleIncrease}
-                        onDecrease={this.handleDecrease}
-                        onDelete={this.handleDelete}
-                        onClearCart={this.handleClearCart}
-                            // onRemoveToCart ={this.handleRemoveToCart}
+                        <Shopping
+                            onAddToCart={this.handleAddToCart}
+                            cart={this.state.cart}
+                            onIncrease={this.handleIncrease}
+                            onDecrease={this.handleDecrease}
+                            onDelete={this.handleDelete}
+                            onClearCart={this.handleClearCart}
+                        // onRemoveToCart ={this.handleRemoveToCart}
                         />
-                       
+
                     </Route>
                     {/*productdetails route*/}
                     <Route path="/products/:id"><ProductDetail /></Route>
                     {/*cart route*/}
                     <Route path='/Cart' >
-                        <Cart/>
+                        <Cart />
                     </Route>
                     <Route path='/CartItem'>Cartitems</Route>
 
@@ -517,3 +536,4 @@ ReactDOM.render(<App />, document.getElementById("shopping"));
 
 
 //https://github.com/FNNDSC/ChRIS_ui/issues
+

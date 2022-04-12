@@ -41,4 +41,14 @@
     position: absolute;
    
   }
-  
+
+ .flex{
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   gap: 8px;
+ }
+ 
+ .lg1{
+   width: 30vw;
+ }
