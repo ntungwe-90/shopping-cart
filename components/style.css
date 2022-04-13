@@ -42,13 +42,18 @@
    
   }
 
- .flex{
-   display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   gap: 8px;
- }
+ /* .flex{ 
+    display: flex; 
+    flex-direction: row;
+   justify-content: space-between; 
+    gap: 35px;
+   align-items: center; 
+  }  */
  
  .lg1{
-   width: 30vw;
+   width: 100vw;
  }
+ 
+.iconb{
+  margin-left: 20px;
+} 

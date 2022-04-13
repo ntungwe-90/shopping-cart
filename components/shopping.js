@@ -104,7 +104,7 @@ class ProductDetail extends React.Component {
                             <div>{this.state.product.category}</div> <br></br>
                             <div><button className="btn btn-danger">{this.state.product.qty}pieces left</button></div>
                             <br></br>
-                            <button className='btn btn-success'>Add to Cart</button>
+                            <AddToCart onAddToCart={this.props.onAddToCart} />
                         </div>
 
                     </div>
@@ -149,12 +149,15 @@ class Sidebar extends React.Component {
         return (
 
             <div className="col-4">
+                
+                <CartIcon cart={this.props.cart}/>
                 <Wallet wallet={this.props.wallet} />
                 <Cart cart={this.props.cart}
                     onIncrease={this.props.onIncrease}
                     onDecrease={this.props.onDecrease}
                     onDelete={this.props.onDelete}
                     onClearCart={this.props.onClearCart}
+
                 />
                 <Basket />
             </div>
@@ -183,6 +186,16 @@ class Wallet extends React.Component {
         );
     }
 }
+/**
+ * @prop {array} cart array of items in clients cart
+ * @prop {function} onIncrease  handles increase products
+ * @prop {function} onDecrease handles product decresae in cart
+ * @prop {function} onDelete handles products delete
+ * @prop {function} onRemoveToCart reoves all items
+ * @prop {function} onClearCart clears the entire cart
+
+ */
+
 class Cart extends React.Component {
     constructor(props) {
         super(props)
@@ -190,10 +203,11 @@ class Cart extends React.Component {
     render() {
 
         return (
-            <div className="row border">
+            <div className="row border" style={{ marginTop: '80px' }}>
                 <div className="col 3">
-
-                    <h3>My Cart</h3>
+                    <Link to='/'>homepage</Link>
+                    <h3> Cart</h3>
+                    <button className="btn btn-outline-warning lg1" onClick={() => this.props.onClearCart(this.props.item)}>Clear Cart</button><br />
                     {this.props.cart.map((item) => (
                         <CartItem key={item.id} item={item}
                             onIncrease={this.props.onIncrease}
@@ -202,20 +216,77 @@ class Cart extends React.Component {
                             onClearCart={this.props.onClearCart}
 
                         />
-
-
                     ))}
 
-                    <Link to='/'>homepage</Link>
-                    {/* <Link to='/cart'>View Cart</Link> */}
-
+                    <Link to='/cart'>View Cart</Link>
                 </div>
             </div>
 
         );
     }
 }
+class CartIcon extends React.Component {
+     // console.log(this.props)
+    constructor(props) {
+        super(props)
+    }
+    render() {
+       
+        return (
+           <>
+           <button type="button" className="btn btn-primary position-relative iconb">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" className="bi bi-cart-fill" viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+          </svg>
+            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{this.props.cart.length} 
+              
+              <span className="visually-hidden">unread messages</span>
+            </span>
+          </button>
+           </>
+          
+        )
+    }
+}
 
+class Navbar extends React.Component{
+    render(){
+        return(
+          
+ <nav className="navbar navbar-expand-lg fixed-top navbarScroll  navbar-dark" style={{backgroundColor:"rgb(141, 159, 161)"}}>
+ <div className="container">
+   <a className="navbar-brand" href="#">Brad</a>
+   <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+     <span className="navbar-toggler-icon"></span>
+   </button>
+  
+   <div className="collapse navbar-collapse" id="navbarSupportedContent">
+     <ul className="navbar-nav ms-auto">
+       <li className="nav-item active">
+         <a className="nav-link" href="#home">Home</a>
+       </li>
+       <li className="nav-item">
+         <a className="nav-link" href="#about">About</a>
+       </li>
+       <li className="nav-item">
+         <a className="nav-link" href="#services">Services</a>
+       </li>
+       <li className="nav-item">
+         <a className="nav-link" href="#portfolio">Portfolio</a>
+       </li>
+       <li className="nav-item">
+         <a className="nav-link" href="#contact">Contact</a>
+       </li>
+       
+     </ul>
+     <CartIcon  cart={this.props.cart}/>
+   </div>
+ </div>
+</nav>   
+        )
+    }
+}
 class CartItem extends React.Component {
     constructor(props) {
         super(props)
@@ -223,52 +294,43 @@ class CartItem extends React.Component {
 
     render() {
         return (
+            <div className="row border-top">
+                <div className="col-4 mb-4">
+                        <p className="card-title">{this.props.item.title}</p>
+                            <img
+                                className="bd-placeholder-img card-img-top mx-auto"
+                                src={this.props.item.image}
+                                style={{ height: "25vh", width:"60%" }}
+                                alt="..."
+                            />
+                             </div>
+                            <div className="col-3 text-center mt-5 d-flex justify-contenet-between align-items-center mid">
+                             <button className="btn btn-" onClick={() => this.props.onIncrease(this.props.item)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="blue" className="bi bi-file-plus" viewBox="0 0 16 16">
+                                        <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z" />
+                                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
+                                    </svg></button><br />
 
-            <div className="col-4 mb-4">
-                <h5>cart items</h5>
-                <div className=" ">
-                    <div className="card-body flex">
-                        <img
-                            className="bd-placeholder-img card-img-top"
-                            src={this.props.item.image}
-                            style={{ height: "15vh" }}
-                            alt="..."
-                         />
-                        <p className="card-title text-truncate">{this.props.item.title}</p>
-
-                        <p className="card-text"><strong>${this.props.item.price}</strong></p>
-
-                        <p className="card-text">{this.props.item.category}</p>
-
-                        <p className="card-text">
-                            <small className="text-muted">
-                                Quantity:{this.props.item.cqty}
-                            </small>
-                        </p>
-
-                        <div className="btn-group" role="group" aria-label="Basic example">
-                            <button className="btn btn-primary" onClick={() => this.props.onIncrease(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-plus" viewBox="0 0 16 16">
-                                <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z" />
-                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
-                            </svg></button><br />
-                            <button className="btn btn-success" onClick={() => this.props.onDecrease(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-minus" viewBox="0 0 16 16">
-                                <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z" />
-                                <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z" />
-                                <path d="M6 8a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1H6Z" />
-                            </svg></button><br />
-                            <button className="btn btn-danger" onClick={() => this.props.onDelete(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                            </svg></button><br />
-
-
-
-                        </div>
-
-
-                    </div>
-                    <button className="btn btn-warning lg1" onClick={() => this.props.onClearCart(this.props.item)}>Clear Cart</button>
-                </div>
-
+                                    <p className="card-text">
+                                <small className="bold">
+                                    {this.props.item.cqty}
+                                </small>
+                            </p>
+                            <button className="btn btn-" onClick={() => this.props.onDecrease(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="green" className="bi bi-clipboard2-minus" viewBox="0 0 16 16">
+                                    <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z" />
+                                    <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z" />
+                                    <path d="M6 8a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1H6Z" />
+                                </svg></button><br />
+                                  </div>
+                             <div className="col-2 text-center mt-5 d-flex justify-contenet-between align-items-center">
+                                  <p className="card-text"><strong>${this.props.item.price}</strong></p>
+                             <p className=" d-flex justify-contenet-between align-items-center mid">{this.props.item.category}</p>  
+                             </div>
+                             <div className="col-2 text-center mt-5 d-flex justify-contenet-between align-items-center ">
+                             <button className="btn btn-" onClick={() => this.props.onDelete(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="tomato" className="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button><br /><hr />
+                             </div >
             </div>
         )
     }
@@ -381,8 +443,10 @@ class Shopping extends React.Component {
         // console.log(this.props)
 
         return (
-            <>
-                <div className="row border">
+           
+            <div>
+                {/* <Navbar/> */}
+            <div className="row border">
                     <h1 className="text-center " style={{ marginTop: "70px" }}>
                         Enjoy yourself while shopping. Its affordable
                     </h1>
@@ -399,8 +463,12 @@ class Shopping extends React.Component {
                     />
 
 
-                </div>
-            </>
+
+
+                </div> 
+            </div>
+               
+           
 
         );
     }
@@ -494,11 +562,21 @@ class App extends React.Component {
             cart: cart
         })
     }
+
+    handleCartIcon = () => {
+        alert('cart clicked')
+        //    const cart = this.state.cart.length()
+        //    this.setState({
+        //        cart : cart
+        //    })
+    }
     render() {
 
         return (
-
-            <Router>
+            <div>
+               
+               <Router >
+            <Navbar cart = {this.state.cart}/>
                 <Switch>
                     {/*hompage route*/}
                     <Route path="/" exact>
@@ -517,13 +595,22 @@ class App extends React.Component {
                     <Route path="/products/:id"><ProductDetail /></Route>
                     {/*cart route*/}
                     <Route path='/Cart' >
-                        <Cart />
+                        <Cart cart={this.state.cart}
+                            onIncrease={this.handleIncrease}
+                            onDecrease={this.handleDecrease}
+                            onDelete={this.handleDelete}
+                            onClearCart={this.handleClearCart}
+                            onIcon={this.handleCartIcon}
+
+
+                        />
                     </Route>
                     <Route path='/CartItem'>Cartitems</Route>
+                    
 
                 </Switch>
             </Router>
-
+            </div>
         )
     }
 }
@@ -531,7 +618,7 @@ class App extends React.Component {
 
 
 
-ReactDOM.render(<App />, document.getElementById("shopping"));
+ ReactDOM.render(<App />, document.getElementById("shopping"));
 
 
 
