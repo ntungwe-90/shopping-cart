@@ -294,43 +294,51 @@ class CartItem extends React.Component {
 
     render() {
         return (
-            <div className="row border-top">
+            <div className="row border-top d-flex justify-content-center">
                 <div className="col-4 mb-4">
-                        <p className="card-title">{this.props.item.title}</p>
-                            <img
+                        <p className="card-title fw-bold">{this.props.item.title}</p>
+                            {/* <img
                                 className="bd-placeholder-img card-img-top mx-auto"
                                 src={this.props.item.image}
                                 style={{ height: "25vh", width:"60%" }}
                                 alt="..."
-                            />
-                             </div>
-                            <div className="col-3 text-center mt-5 d-flex justify-contenet-between align-items-center mid">
+                            /> */}
+
+                       <div className="col-3 text-center mt-5 d-flex justify-contenet-between align-items-center">
                              <button className="btn btn-" onClick={() => this.props.onIncrease(this.props.item)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="blue" className="bi bi-file-plus" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" className="bi bi-file-plus svgcolor" viewBox="0 0 16 16">
                                         <path d="M8.5 6a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V10a.5.5 0 0 0 1 0V8.5H10a.5.5 0 0 0 0-1H8.5V6z" />
                                         <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
                                     </svg></button><br />
 
                                     <p className="card-text">
-                                <small className="bold">
+                                <small className="fw-bold text-center">
                                     {this.props.item.cqty}
                                 </small>
                             </p>
-                            <button className="btn btn-" onClick={() => this.props.onDecrease(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="green" className="bi bi-clipboard2-minus" viewBox="0 0 16 16">
+                            <button className="btn btn-" onClick={() => this.props.onDecrease(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" className="bi bi-clipboard2-minus svgcolor2" color="blue" viewBox="0 0 16 16">
                                     <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z" />
                                     <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z" />
                                     <path d="M6 8a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1H6Z" />
                                 </svg></button><br />
                                   </div>
-                             <div className="col-2 text-center mt-5 d-flex justify-contenet-between align-items-center">
+                             </div>
+                           
+                             <div className="col-3 text-center mt-5 d-flex justify-contenet-between align-items-center mid">
                                   <p className="card-text"><strong>${this.props.item.price}</strong></p>
                              <p className=" d-flex justify-contenet-between align-items-center mid">{this.props.item.category}</p>  
                              </div>
-                             <div className="col-2 text-center mt-5 d-flex justify-contenet-between align-items-center ">
-                             <button className="btn btn-" onClick={() => this.props.onDelete(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="tomato" className="bi bi-trash-fill" viewBox="0 0 16 16">
+
+                             <div className="col-2 d-flex flex-row-reverse bd-highlight ">
+                             <button className="btn btn-" onClick={() => this.props.onDelete(this.props.item)}><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="tomato" className="bi bi-trash-fill" viewBox="0 0 16 16">
                                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                 </svg></button><br /><hr />
                              </div >
+
+                           
+                           
+
+                   
             </div>
         )
     }

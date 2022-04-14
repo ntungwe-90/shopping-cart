@@ -57,3 +57,11 @@
 .iconb{
   margin-left: 20px;
 } 
+
+.svgcolor{
+  background-color: dodgerblue;
+  color: #fff;
+}
+.svgcolor2{
+  background-color: green;
+}
