@@ -46,6 +46,7 @@ class Product extends React.Component {
     }
 }
 
+
 class ProductDetail extends React.Component {
     constructor(props) {
         super(props)
@@ -93,7 +94,7 @@ class ProductDetail extends React.Component {
                         <div className="col-4 border">
                             <div className="prize__percent2">20%off </div>
                             <img src={this.state.product.image} className="card.img" alt=''
-                                style={{ height: "40vh", width:"100%" }}
+                                style={{ height: "40vh", width: "100%" }}
                             />
 
                         </div>
@@ -102,22 +103,22 @@ class ProductDetail extends React.Component {
                             <div className="text-truncate">{this.state.product.description}</div>
                             <h1><strong></strong></h1>
                             <div className='d-flex justify-contenet-between align-items-center text-center'>
-                                <h6>Rating</h6>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="yellow" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <h6>Rating : </h6>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
                                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="yellow" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
                                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="yellow" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
                                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                 </svg>
 
 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="yellow" className="bi bi-star" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" className="bi bi-star" viewBox="0 0 16 16">
                                     <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="yellow" className="bi bi-star" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" className="bi bi-star" viewBox="0 0 16 16">
                                     <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                 </svg>
                             </div>
@@ -136,6 +137,70 @@ class ProductDetail extends React.Component {
     }
 }
 
+
+class AddProduct extends React.Component {
+    constructor(props){
+        super(props)
+        this.setState= {
+            id:0,
+           title:"",
+           price:0,
+           description:"",
+           category:"",
+           qty:0
+        }
+    }
+    render() {
+      
+        const handleChange = (event) => {
+            // console.log(event.target.value)   
+           
+        }
+
+  
+        
+         
+        
+        return (
+            <div className="container">
+                <h1 style={{ marginTop: "50px" }}>New Product</h1>
+                <form>
+                    <div className="mb-3">
+                        <label htmlFor="title" className="form-label">Name</label>
+                        <input type="text"
+                            name="title"
+                            className="form-control"
+                            id="title"
+                            onChange={handleChange}
+                            aria-describedby="emailHelp" />
+                    </div>
+                    <div className="mb-3 container">
+                        <label htmlFor="exampleInputEmail1" className="form-label">price</label>
+                        <input type="number" 
+                        className="form-control" 
+                        id="price"
+                        onChange={handleChange}
+                         aria-describedby="emailHelp" />
+                    </div>
+                    <div className="mb-3 container">
+                        <label htmlFor="exampleInputEmail1" className="form-label">Quantity</label>
+                        <input type="text"
+                         className="form-control"
+                         id="quantity"
+                         onChange={handleChange}
+                          aria-describedby="emailHelp" />
+                    </div>
+                   
+
+                    <button type="submit" className="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        )
+    }
+}
+
+
+
 ProductDetail = withRouter(ProductDetail)
 
 class Shop extends React.Component {
@@ -146,13 +211,20 @@ class Shop extends React.Component {
     };
     render() {
         return (
+
             <div className="col-8 border" style={{ backgroundColor: "rgb(141, 159, 161)" }}>
+                <Link to='/products/add'>AddProduct</Link>
                 <div className="row">
                     {this.props.products.map((product) =>
                         <Product key={product.id} product={product} onAddToCart={() => this.props.onAddToCart(product)}
 
+
+
                         />
+
                     )}
+
+
 
                 </div>
             </div>
@@ -216,6 +288,8 @@ class Wallet extends React.Component {
 
  */
 
+
+
 class Cart extends React.Component {
     constructor(props) {
         super(props)
@@ -245,6 +319,8 @@ class Cart extends React.Component {
         );
     }
 }
+
+
 class CartIcon extends React.Component {
     // console.log(this.props)
     constructor(props) {
@@ -268,6 +344,7 @@ class CartIcon extends React.Component {
         )
     }
 }
+
 
 class Navbar extends React.Component {
     render() {
@@ -307,6 +384,8 @@ class Navbar extends React.Component {
         )
     }
 }
+
+
 class CartItem extends React.Component {
     constructor(props) {
         super(props)
@@ -377,6 +456,7 @@ class RemoveCartItem extends React.Component {
         )
     }
 }
+
 
 class AddToCart extends React.Component {
     render() {
@@ -598,6 +678,10 @@ class App extends React.Component {
         //        cart : cart
         //    })
     }
+
+    // HandleChange = (event) => {
+    //     console.log(event.target.value);
+    // }
     render() {
 
         return (
@@ -619,8 +703,12 @@ class App extends React.Component {
                             />
 
                         </Route>
+                        <Route path='/products/add'><AddProduct
+                        //   onChange={this.HandleChange(event.target.value)}
+                        /></Route>
                         {/*productdetails route*/}
                         <Route path="/products/:id"><ProductDetail /></Route>
+
                         {/*cart route*/}
                         <Route path='/Cart' >
                             <Cart cart={this.state.cart}
@@ -629,6 +717,7 @@ class App extends React.Component {
                                 onDelete={this.handleDelete}
                                 onClearCart={this.handleClearCart}
                                 onIcon={this.handleCartIcon}
+
 
 
                             />
