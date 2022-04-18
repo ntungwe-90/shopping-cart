@@ -158,7 +158,50 @@ class AddProduct extends React.Component {
             category: "",
             qty: 0
         }
+        this.handleTitlechange=this.handleTitlechange.bind(this);
+        this.handlePricechange=this.handlePricechange.bind(this);
+        this.handleDescriptionchange=this.handleDescriptionchange.bind(this);
+        this.handleCategorychange=this.handleCategorychange.bind(this);
+        this.handleQtychange=this.handleQtychange.bind(this);
+         this.handleSubmit=this.handleSubmit.bind(this);
     }
+   handleTitlechange(i){
+      this.setState({title:i.target.value})
+       console.log(this.state.title)
+   }
+    handlePricechange(i){
+        this.setState({price:i.target.value});
+        console.log(this.state.price)
+    }
+
+    handleDescriptionchange(i){
+        this.setState({description:i.target.value});
+        console.log(this.state.description)
+    }
+
+    handleCategorychange(i){
+        this.setState({category:i.target.value});
+        console.log(this.state.category)
+    }
+
+    handleQtychange(i){
+        this.setState({qty:i.target.value});
+        console.log(this.state.qty)
+    }
+
+    handleSubmit(i){
+        i.preventDefault();
+        let newUser ={title:this.title, price:this.price, description:this.description, category:this.category,qty:this.qty};
+        this.setState({users:[...this.state.users, newUser],
+            title: "",
+            price: 0,
+            description: "",
+            category: "",
+            qty: 0,
+            
+        })
+    }
+
     render() {
 
         const handleChange = (event) => {
@@ -169,21 +212,24 @@ class AddProduct extends React.Component {
             <div className="container">
                
                 <h1 style={{ marginTop: "50px" }}>New Product</h1>
-                <form>
+                <form onSubmit={this.handleSubmit}>
                 <Link to="/">home</Link>
                     <div className="mb-3">
                    
                         <label htmlFor="title" className="form-label">Name</label>
                         <input type="text"
+                        placeholder="Title"
                             name="title"
                             className="form-control"
                             id="title"
-                            onChange={handleChange}
+                            // value={this.state.title}
+                            onChange={this.handleTitlechange}
                             aria-describedby="emailHelp" />
                     </div>
                     <div className="mb-3 container">
                         <label htmlFor="exampleInputEmail1" className="form-label">price</label>
                         <input type="number"
+                         placeholder="Pice"
                             className="form-control"
                             id="price"
                             onChange={handleChange}
@@ -192,24 +238,29 @@ class AddProduct extends React.Component {
                     <div className="mb-3 container">
                         <label htmlFor="exampleInputEmail1" className="form-label">Quantity</label>
                         <input type="text"
+                         placeholder="Quantity"
                             className="form-control"
                             id="quantity"
                             onChange={handleChange}
                             aria-describedby="emailHelp" />
                     </div>
                     <div>
-                    <label htmlFor="exampleInputEmail1" className="form-label">category</label>
-                        <select class="form-select mb-3 container" aria-label="Default select example">
+                    <label htmlFor="category" className="form-label">category</label>
+                        {/* <select class="form-select mb-3 container" aria-label="Default select example">
                             <option selected>Open this select menu</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
-                        </select>
+                        </select> */}
                     </div>
 
 
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
+                {/* <div>
+         {this.state.users.map((user, index) => (<CartItem key={index} title={user.title}/>
+         ))}
+        </div> */}
             </div>
         )
     }
