@@ -37,8 +37,8 @@ class Product extends React.Component {
                             <small className="text-muted">
                                 quantity:pc(s){this.props.product.qty}
                             </small></p>
-                        <AddToCart onAddToCart={this.props.onAddToCart} />
-                    </div>
+                            <AddToCart  onAddToCart={this.props.onAddToCart}/>
+                                   </div>
                 </div>
             </div>
 
@@ -87,7 +87,7 @@ class ProductDetail extends React.Component {
 
         return (
             <div style={{ marginTop: '60px', backgroundColor: "lightgrey" }}>
-                <Link to='/' className=" bton">HOME</Link>
+              <Link to='/' className=" bton">HOME</Link>
                 <p className=" title text-center">Our ProductDetails</p>
                 <div className="container">
                     <div className="row border">
@@ -104,13 +104,13 @@ class ProductDetail extends React.Component {
                             <h1><strong></strong></h1>
                             <div className='d-flex justify-contenet-between align-items-center text-center'>
                                 <h6>Rating : </h6>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" className="bi bi-star-fill" viewBox="0 0 16 16">
                                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" className="bi bi-star-fill" viewBox="0 0 16 16">
                                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="gold" className="bi bi-star-fill" viewBox="0 0 16 16">
                                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                 </svg>
 
@@ -125,7 +125,16 @@ class ProductDetail extends React.Component {
                             <div>{this.state.product.category}</div> <br></br>
                             <div><button className="btn btn-danger">{this.state.product.qty}pieces left</button></div>
                             <br></br>
-                            <AddToCart onAddToCart={this.props.onAddToCart} />
+                            {/* <h6>
+              {this.state.product.qty >= 1 ? (
+                <p className="badge bg-success">Available</p>
+              ) : (
+                <p className="badge bg-danger">Out of stock</p>
+              )}
+            </h6> */}
+                           
+                           
+                          <AddToCart onAddToCart={this.props.onAddToCart}/>
                         </div>
 
                     </div>
@@ -139,33 +148,31 @@ class ProductDetail extends React.Component {
 
 
 class AddProduct extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.setState= {
-            id:0,
-           title:"",
-           price:0,
-           description:"",
-           category:"",
-           qty:0
+        this.setState = {
+            id: 0,
+            title: "",
+            price: 0,
+            description: "",
+            category: "",
+            qty: 0
         }
     }
     render() {
-      
+
         const handleChange = (event) => {
             // console.log(event.target.value)   
-           
-        }
 
-  
-        
-         
-        
-        return (
+        }
+      return (
             <div className="container">
+               
                 <h1 style={{ marginTop: "50px" }}>New Product</h1>
                 <form>
+                <Link to="/">home</Link>
                     <div className="mb-3">
+                   
                         <label htmlFor="title" className="form-label">Name</label>
                         <input type="text"
                             name="title"
@@ -176,21 +183,30 @@ class AddProduct extends React.Component {
                     </div>
                     <div className="mb-3 container">
                         <label htmlFor="exampleInputEmail1" className="form-label">price</label>
-                        <input type="number" 
-                        className="form-control" 
-                        id="price"
-                        onChange={handleChange}
-                         aria-describedby="emailHelp" />
+                        <input type="number"
+                            className="form-control"
+                            id="price"
+                            onChange={handleChange}
+                            aria-describedby="emailHelp" />
                     </div>
                     <div className="mb-3 container">
                         <label htmlFor="exampleInputEmail1" className="form-label">Quantity</label>
                         <input type="text"
-                         className="form-control"
-                         id="quantity"
-                         onChange={handleChange}
-                          aria-describedby="emailHelp" />
+                            className="form-control"
+                            id="quantity"
+                            onChange={handleChange}
+                            aria-describedby="emailHelp" />
                     </div>
-                   
+                    <div>
+                    <label htmlFor="exampleInputEmail1" className="form-label">category</label>
+                        <select class="form-select mb-3 container" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+
 
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
@@ -213,7 +229,8 @@ class Shop extends React.Component {
         return (
 
             <div className="col-8 border" style={{ backgroundColor: "rgb(141, 159, 161)" }}>
-                <Link to='/products/add'>AddProduct</Link>
+              <Link to='/products/add' className="btn1">AddProduct</Link>
+               
                 <div className="row">
                     {this.props.products.map((product) =>
                         <Product key={product.id} product={product} onAddToCart={() => this.props.onAddToCart(product)}
