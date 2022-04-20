@@ -37,8 +37,8 @@ class Product extends React.Component {
                             <small className="text-muted">
                                 quantity:pc(s){this.props.product.qty}
                             </small></p>
-                            <AddToCart  onAddToCart={this.props.onAddToCart}/>
-                                   </div>
+                        <AddToCart onAddToCart={this.props.onAddToCart} />
+                    </div>
                 </div>
             </div>
 
@@ -87,7 +87,7 @@ class ProductDetail extends React.Component {
 
         return (
             <div style={{ marginTop: '60px', backgroundColor: "lightgrey" }}>
-              <Link to='/' className=" bton">HOME</Link>
+                <Link to='/' className=" bton">HOME</Link>
                 <p className=" title text-center">Our ProductDetails</p>
                 <div className="container">
                     <div className="row border">
@@ -132,9 +132,9 @@ class ProductDetail extends React.Component {
                 <p className="badge bg-danger">Out of stock</p>
               )}
             </h6> */}
-                           
-                           
-                          <AddToCart onAddToCart={this.props.onAddToCart}/>
+
+
+                            <AddToCart onAddToCart={this.props.onAddToCart} />
                         </div>
 
                     </div>
@@ -150,117 +150,120 @@ class ProductDetail extends React.Component {
 class AddProduct extends React.Component {
     constructor(props) {
         super(props)
-        this.setState = {
+        this.state = {
             id: 0,
             title: "",
             price: 0,
-            description: "",
             category: "",
-            qty: 0
-        }
-        this.handleTitlechange=this.handleTitlechange.bind(this);
-        this.handlePricechange=this.handlePricechange.bind(this);
-        this.handleDescriptionchange=this.handleDescriptionchange.bind(this);
-        this.handleCategorychange=this.handleCategorychange.bind(this);
-        this.handleQtychange=this.handleQtychange.bind(this);
-         this.handleSubmit=this.handleSubmit.bind(this);
-    }
-   handleTitlechange(i){
-      this.setState({title:i.target.value})
-       console.log(this.state.title)
-   }
-    handlePricechange(i){
-        this.setState({price:i.target.value});
-        console.log(this.state.price)
-    }
-
-    handleDescriptionchange(i){
-        this.setState({description:i.target.value});
-        console.log(this.state.description)
-    }
-
-    handleCategorychange(i){
-        this.setState({category:i.target.value});
-        console.log(this.state.category)
-    }
-
-    handleQtychange(i){
-        this.setState({qty:i.target.value});
-        console.log(this.state.qty)
-    }
-
-    handleSubmit(i){
-        i.preventDefault();
-        let newUser ={title:this.title, price:this.price, description:this.description, category:this.category,qty:this.qty};
-        this.setState({users:[...this.state.users, newUser],
-            title: "",
-            price: 0,
             description: "",
-            category: "",
+            image: "",
             qty: 0,
-            
-        })
+        };
+
+    }
+    /**
+     * @param {}event
+     * localsorage takes in data to string(using json)
+     */
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+
+        let products = JSON.parse(localStorage.getItem("products")) || []
+        products.push(this.state)
+
+        localStorage.setItem("products", JSON.stringify(products));
+
+
+
+    }
+
+
+    handleChange = (event) => {
+        const value = event.target.value;
+        this.setState({ ...this.state, [event.target.name]: value });
+
+    }
+    async componentDidMount() {
+        // let product = localStorage.getItem('products')
+
+        const product = JSON.parse(localStorage.getItem("products"))
+        console.log(product)
+        console.log(typeof (product))
+
     }
 
     render() {
-
-        const handleChange = (event) => {
-            // console.log(event.target.value)   
-
-        }
-      return (
+        return (
             <div className="container">
-               
                 <h1 style={{ marginTop: "50px" }}>New Product</h1>
-                <form onSubmit={this.handleSubmit}>
-                <Link to="/">home</Link>
+                <form className="needs-validation" onSubmit={this.handleSubmit}>
+                    <Link to="/">home</Link>
                     <div className="mb-3">
-                   
                         <label htmlFor="title" className="form-label">Name</label>
                         <input type="text"
-                        placeholder="Title"
+                            placeholder="name of product"
                             name="title"
                             className="form-control"
-                            id="title"
-                            // value={this.state.title}
-                            onChange={this.handleTitlechange}
-                            aria-describedby="emailHelp" />
+                            id="name"
+                            //  value={this.state.value}
+                            onChange={this.handleChange}
+                            required
+                        />
                     </div>
                     <div className="mb-3 container">
                         <label htmlFor="exampleInputEmail1" className="form-label">price</label>
-                        <input type="number"
-                         placeholder="Pice"
+                        <input type="text"
+                            name="price"
+                            placeholder="Pice"
                             className="form-control"
+                            // value={this.state.value}
                             id="price"
-                            onChange={handleChange}
-                            aria-describedby="emailHelp" />
+                            onChange={this.handleChange}
+                        />
                     </div>
+
+                    <div className="mb-3 container">
+                        <label htmlFor="exampleInputEmail1" className="form-label">description</label>
+                        <input type="text"
+                            name="description"
+                            placeholder="description"
+                            className="form-control"
+                            // value={this.state.value}
+                            id="description"
+                            onChange={this.handleChange}
+                        />
+                    </div>
+
                     <div className="mb-3 container">
                         <label htmlFor="exampleInputEmail1" className="form-label">Quantity</label>
                         <input type="text"
-                         placeholder="Quantity"
+                            name="qty"
+                            placeholder="quantity"
                             className="form-control"
+                            // value={this.state.value}
                             id="quantity"
-                            onChange={handleChange}
-                            aria-describedby="emailHelp" />
+                            onChange={this.handleChange}
+                        />
                     </div>
+
                     <div>
-                    <label htmlFor="category" className="form-label">category</label>
-                        {/* <select class="form-select mb-3 container" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select> */}
+                        <label htmlFor="category" className="form-label">category</label>
+                        <select className="form-select mb-3 container" aria-label="Default select example">
+                            <option> select menu</option>
+                            <option >Jacket</option>
+                            <option>shirt</option>
+                            <option>shoes</option>
+                            <option >television</option>
+
+                        </select>
+
+
                     </div>
 
 
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
                 </form>
-                {/* <div>
-         {this.state.users.map((user, index) => (<CartItem key={index} title={user.title}/>
-         ))}
-        </div> */}
             </div>
         )
     }
@@ -271,17 +274,13 @@ class AddProduct extends React.Component {
 ProductDetail = withRouter(ProductDetail)
 
 class Shop extends React.Component {
-    handleAddToCart = () => {
 
-        alert("product added")
-
-    };
     render() {
         return (
 
             <div className="col-8 border" style={{ backgroundColor: "rgb(141, 159, 161)" }}>
-              <Link to='/products/add' className="btn1">AddProduct</Link>
-               
+                <Link to='/products/add' className="btn1">AddProduct</Link>
+
                 <div className="row">
                     {this.props.products.map((product) =>
                         <Product key={product.id} product={product} onAddToCart={() => this.props.onAddToCart(product)}
@@ -676,7 +675,7 @@ class App extends React.Component {
      
      * add our cart to cart array
      */
-    handleAddToCart = (product) => {
+    handleAddToCart = (product, event) => {
         if (product.qty >= 1) {
             const available = this.state.cart.find((item) => item.id === product.id);
             if (available) {
@@ -687,11 +686,33 @@ class App extends React.Component {
                 let cart = [...this.state.cart, CartItem];
                 this.setState({
                     cart: cart,
-                })
-            }
 
+                });
+               localStorage.setItem('cart', JSON.stringify(cart))
+            }
+        }else{
+            alert("out of stock");
         }
     }
+
+async componentDidMount (){
+    const cart = JSON.parse(localStorage.getItem("cart"));
+    if(cart){
+        this.setState({
+            cart: cart,
+        })
+    }
+  
+}
+
+
+//componentDidUpdate(prevState){
+ //   if(prevState.cart !==this.state.cart){
+
+  //  }
+//localStorage.setItem('cart',JSON.stringify(cart))
+    
+//}
 
     handleIncrease = (product) => {
         if (product.qty >= 1) {
