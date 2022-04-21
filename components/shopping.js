@@ -84,7 +84,14 @@ class ProductDetail extends React.Component {
 
         // console.log(this.state)
         // const {image, title, description, price }
-
+        const {
+            image,
+            title,
+            description,
+            price,
+            rating = {},
+            qty,
+          } = this.state.product;
         return (
             <div style={{ marginTop: '60px', backgroundColor: "lightgrey" }}>
                 <Link to='/' className=" bton">HOME</Link>
@@ -178,18 +185,24 @@ class AddProduct extends React.Component {
 
     }
 
-
     handleChange = (event) => {
-        const value = event.target.value;
-        this.setState({ ...this.state, [event.target.name]: value });
+        const target  = event.target;
+        const value = target.value;
+        const name = target.name;
+        this.setState({
+            [name] : value
+        });
+       // const value = event.target.value;
+        //this.setState({ ...this.state, [event.target.name]: value });
 
     }
     async componentDidMount() {
+        const items = JSON.parse(localStorage.getItem("products"))
         // let product = localStorage.getItem('products')
 
-        const product = JSON.parse(localStorage.getItem("products"))
-        console.log(product)
-        console.log(typeof (product))
+      //  const product = JSON.parse(localStorage.getItem("products"))
+        console.log(items)
+        console.log(typeof (items))
 
     }
 
@@ -197,69 +210,77 @@ class AddProduct extends React.Component {
         return (
             <div className="container">
                 <h1 style={{ marginTop: "50px" }}>New Product</h1>
-                <form className="needs-validation" onSubmit={this.handleSubmit}>
-                    <Link to="/">home</Link>
-                    <div className="mb-3">
-                        <label htmlFor="title" className="form-label">Name</label>
-                        <input type="text"
-                            placeholder="name of product"
-                            name="title"
-                            className="form-control"
-                            id="name"
-                            //  value={this.state.value}
-                            onChange={this.handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="mb-3 container">
-                        <label htmlFor="exampleInputEmail1" className="form-label">price</label>
-                        <input type="text"
-                            name="price"
-                            placeholder="Pice"
-                            className="form-control"
-                            // value={this.state.value}
-                            id="price"
-                            onChange={this.handleChange}
-                        />
-                    </div>
-
-                    <div className="mb-3 container">
-                        <label htmlFor="exampleInputEmail1" className="form-label">description</label>
-                        <input type="text"
-                            name="description"
-                            placeholder="description"
-                            className="form-control"
-                            // value={this.state.value}
-                            id="description"
-                            onChange={this.handleChange}
-                        />
-                    </div>
-
-                    <div className="mb-3 container">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Quantity</label>
-                        <input type="text"
-                            name="qty"
-                            placeholder="quantity"
-                            className="form-control"
-                            // value={this.state.value}
-                            id="quantity"
-                            onChange={this.handleChange}
-                        />
-                    </div>
-
-                    <div>
-                        <label htmlFor="category" className="form-label">category</label>
-                        <select className="form-select mb-3 container" aria-label="Default select example">
-                            <option> select menu</option>
-                            <option >Jacket</option>
-                            <option>shirt</option>
-                            <option>shoes</option>
-                            <option >television</option>
-
-                        </select>
-
-
-                    </div>
+                <Link to='/' className=" bton">HOME</Link>
+                <form className="container">
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              name="title"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="quantity" className="form-label">
+              Quantity
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="quantity"
+              name="qty"
+              // value={this.state.qty}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="price">
+              Price
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              id="price"
+              name="price"
+              // value={this.state.price}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label" htmlFor="price">
+              Category
+            </label>
+            <select
+              className="form-select"
+              aria-label="Default select example"
+              onChange={this.handleChange}
+              name="category"
+              // value={this.state.category}
+            >
+              <option value="0">--Choose One--</option>
+              <option value="1">Clothing</option>
+              <option value="2">Accessories</option>
+              <option value="3">Technology</option>
+            </select>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
+            <textarea
+              className="form-control"
+              id="description"
+              rows="3"
+              name="description"
+              // value={this.state.description}
+              onChange={this.handleChange}
+            ></textarea>
+          </div>
+                  
 
 
                     <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
@@ -688,7 +709,7 @@ class App extends React.Component {
                     cart: cart,
 
                 });
-               localStorage.setItem('cart', JSON.stringify(cart))
+               //localStorage.setItem('cart', JSON.stringify(cart))
             }
         }else{
             alert("out of stock");
