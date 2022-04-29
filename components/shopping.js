@@ -12,30 +12,31 @@ class Product extends React.Component {
         super(props)
     }
     render() {
+        const {title, price, qty, category, image, _id:id} = this.props.product
         return (
             <div className="col-4 mb-4">
                 <div className="card shadow-sm">
                     <div className="prize__percent">20%off </div>
                     <img
                         className="bd-placeholder-img card-img-top"
-                        src={this.props.product.image}
+                        src={image}
                         style={{ height: "35vh" }}
                         alt="..."
 
                     />
                     <div className="card-body text-center">
-                        <Link to={'/Products/ ' + this.props.product.id}><p className="card-text text-truncate">
-                            {this.props.product.title}</p>
+                        <Link to={'/Products/' + id}><p className="card-text text-truncate">
+                            {title}</p>
                         </Link>
                         <div className="d-flex justify-contenet-between align-items-center mid">
-                            <p className="card-text">$<strong>{this.props.product.price}</strong></p>
+                            <p className="card-text">$<strong>{price}</strong></p>
                             <p className="prices-amount-old">$<strong>1000</strong></p>
                         </div>
 
-                        <p className="card-text">{this.props.product.category}</p>
+                        <p className="card-text">{category}</p>
                         <p className="card-text">
                             <small className="text-muted">
-                                quantity:pc(s){this.props.product.qty}
+                                quantity:pc(s){qty}
                             </small></p>
                         <AddToCart onAddToCart={this.props.onAddToCart} />
                     </div>
@@ -51,27 +52,16 @@ class ProductDetail extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            product: {}
+            product: {},
+            deleted:0,
+            //confirm: false
         }
     }
-    async getProductById(id) {
-        let product = {}
-        try {
-            const response = await fetch("/data/products.json");
-            const products = await response.json();
-            // console.log(products)
-            // console.log(id);
-            product = products.find(p => p.id == id);
-            // console.log(product);
-        } catch (error) {
-            console.log(error);
-        }
-        return product;
-    }
+
     async componentDidMount() {
         try {
             const { id } = this.props.match.params;
-            const product = await this.getProductById(id);
+            const product = await getProductById(id);
             this.setState({
                 product,
             });
@@ -80,9 +70,32 @@ class ProductDetail extends React.Component {
             console.log(error)
         }
     }
+
+//     handleDelete= ()=>{
+//         const deleteProduct = true;
+//         this.setState({
+//             delete :deleteProduct
+//         })
+
+        
+//     }
+
+//     handleResultsTrue  = ()=>{
+// const confirmDelete = true;
+// this.setState({
+//     confirm:confirmDelete
+// })
+// //console.log('deleted')
+//     }
+//     handleFalse =()=>{
+//         const confirmDelete = false;
+//         this.setState({
+//             confirm:confirmDelete
+//         })
+//     }
     render() {
 
-        // console.log(this.state)
+        console.log(this.state.product)
         // const {image, title, description, price }
         const {
             image,
@@ -91,10 +104,21 @@ class ProductDetail extends React.Component {
             price,
             rating = {},
             qty,
-          } = this.state.product;
+            _id: id,
+        } = this.state.product;
+            
         return (
             <div style={{ marginTop: '60px', backgroundColor: "lightgrey" }}>
-                <Link to='/' className=" bton">HOME</Link>
+                <div className='d-flex justify-contenet-between align-items-center text-center'>
+                    <Link to='/' className=" bton">HOME</Link> <br></br>
+                    <Link to={`/products/edit/${id}`} >Edit Product</Link><br></br>
+                    <Link to="/cart">view cart</Link><br></br>
+                    {/* <span onClick={handleDelete()}>{this.state.delete ?(
+                        <p>deleting for real?</p>) : (<p>delete product</p>)}
+                    
+                        </span> */}
+                </div>
+
                 <p className=" title text-center">Our ProductDetails</p>
                 <div className="container">
                     <div className="row border">
@@ -153,17 +177,27 @@ class ProductDetail extends React.Component {
     }
 }
 
+async  function getProductById(id) {
+	let product = {};
+	try {
+		const response = await fetch("http://localhost:5001/api/products/" + id);
+		const productData = await response.json();
+		product = productData.data
+	} catch (error) {
+		console.log(error);
+	}
+	return product;
+}
 
-class AddProduct extends React.Component {
+class ProductForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: 0,
             title: "",
             price: 0,
             category: "",
             description: "",
-            image: "",
+            // image ="",
             qty: 0,
         };
 
@@ -173,37 +207,71 @@ class AddProduct extends React.Component {
      * localsorage takes in data to string(using json)
      */
 
-    handleSubmit = (event) => {
+    // handleSubmit = (event) => {
+    //     event.preventDefault();
+
+    //     let products = JSON.parse(localStorage.getItem("products")) || []
+    //     products.push(this.state)
+
+    //     localStorage.setItem("products", JSON.stringify(products));
+
+
+    // console.log(this.state)
+    // }
+
+    handleSubmit = async (event) => {
         event.preventDefault();
+        const response = await fetch('http://localhost:5001/api/products', {
+            method: "POST",
+            body: JSON.stringify(this.state),
+            headers: {
+                "content-Type": "application/json",
+            }
+        })
 
-        let products = JSON.parse(localStorage.getItem("products")) || []
-        products.push(this.state)
-
-        localStorage.setItem("products", JSON.stringify(products));
-
-
-
+        // console.log(response.data)
     }
 
+
+
+
     handleChange = (event) => {
-        const target  = event.target;
+        const target = event.target;
         const value = target.value;
         const name = target.name;
         this.setState({
-            [name] : value
+            [name]: value
         });
-       // const value = event.target.value;
+        // const value = event.target.value;
         //this.setState({ ...this.state, [event.target.name]: value });
 
     }
+    //loads when form load 
+    //the id 
     async componentDidMount() {
-        const items = JSON.parse(localStorage.getItem("products"))
-        // let product = localStorage.getItem('products')
+        try {
+            const { id } = this.props.match.params;
+            // form trigger component to load the form
+            if (id) {
 
-      //  const product = JSON.parse(localStorage.getItem("products"))
-        console.log(items)
-        console.log(typeof (items))
+                const product = await getProductById(id);
+                //console.log(product)
+                const { title, price, description, qty, category } = product;
+                this.setState({
+                    title,
+                    price,
+                    description,
+                    qty,
+                    category
 
+                });
+            }
+
+
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     render() {
@@ -211,76 +279,95 @@ class AddProduct extends React.Component {
             <div className="container">
                 <h1 style={{ marginTop: "50px" }}>New Product</h1>
                 <Link to='/' className=" bton">HOME</Link>
-                <form className="container">
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="title"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="quantity" className="form-label">
-              Quantity
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="quantity"
-              name="qty"
-              // value={this.state.qty}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label" htmlFor="price">
-              Price
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="price"
-              name="price"
-              // value={this.state.price}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label" htmlFor="price">
-              Category
-            </label>
-            <select
-              className="form-select"
-              aria-label="Default select example"
-              onChange={this.handleChange}
-              name="category"
-              // value={this.state.category}
-            >
-              <option value="0">--Choose One--</option>
-              <option value="1">Clothing</option>
-              <option value="2">Accessories</option>
-              <option value="3">Technology</option>
-            </select>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="description" className="form-label">
-              Description
-            </label>
-            <textarea
-              className="form-control"
-              id="description"
-              rows="3"
-              name="description"
-              // value={this.state.description}
-              onChange={this.handleChange}
-            ></textarea>
-          </div>
-                  
+                <form className="container" onSubmit={this.handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="title" className="form-label">
+                            Name
+                        </label>
+                        <input
+                            onChange={this.handleChange}
+                            type="text"
+                            name="title"
+                            className="form-control"
+                            id="title"
+                            value={this.state.title}
+
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="quantity" className="form-label">
+                            Quantity
+                        </label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            id="quantity"
+                            name="qty"
+                            value={this.state.qty}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label" htmlFor="price">
+                            Price
+                        </label>
+                        <input
+                            type="number"
+                            className="form-control"
+                            id="price"
+                            name="price"
+                            value={this.state.price}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+
+                    {/* <div className="mb-3">
+                        <label className="form-label" htmlFor="price">
+                            Image
+                        </label>
+                        <input
+                            type="file"
+                            className="form-control"
+                            id="image"
+                            name="image"
+                            value={this.state.price}
+                            onChange={this.handleChange}
+                        />
+                    </div> */}
+                    <div className="mb-3">
+                        <label className="form-label" htmlFor="price">
+                            Category
+                        </label>
+                        <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            onChange={this.handleChange}
+                            name="category"
+                            value={this.state.category}
+                            id="inputGroupSelect02"
+                        >
+                            <option value="0">--Choose One--</option>
+                            <option value="1">Clothing</option>
+                            <option value="2">Accessories</option>
+                            <option value="3">Technology</option>
+                            <option value="3">Gadgets</option>
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="description" className="form-label">
+                            Description
+                        </label>
+                        <textarea
+                            className="form-control"
+                            id="description"
+                            rows="3"
+                            name="description"
+                            value={this.state.description}
+                            onChange={this.handleChange}
+                        ></textarea>
+                    </div>
+
 
 
                     <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
@@ -289,9 +376,10 @@ class AddProduct extends React.Component {
         )
     }
 }
+ProductForm = withRouter(ProductForm)
 
 
-
+//parameter to access an id
 ProductDetail = withRouter(ProductDetail)
 
 class Shop extends React.Component {
@@ -304,7 +392,7 @@ class Shop extends React.Component {
 
                 <div className="row">
                     {this.props.products.map((product) =>
-                        <Product key={product.id} product={product} onAddToCart={() => this.props.onAddToCart(product)}
+                        <Product key={product._id} product={product} onAddToCart={() => this.props.onAddToCart(product)}
 
 
 
@@ -319,9 +407,6 @@ class Shop extends React.Component {
         );
     }
 }
-
-
-
 class Sidebar extends React.Component {
 
     render() {
@@ -345,8 +430,6 @@ class Sidebar extends React.Component {
         );
     }
 }
-
-
 class Wallet extends React.Component {
     render() {
         const { owner = "", balance = 0 } = this.props.wallet;
@@ -375,9 +458,6 @@ class Wallet extends React.Component {
  * @prop {function} onClearCart clears the entire cart
 
  */
-
-
-
 class Cart extends React.Component {
     constructor(props) {
         super(props)
@@ -407,8 +487,6 @@ class Cart extends React.Component {
         );
     }
 }
-
-
 class CartIcon extends React.Component {
     // console.log(this.props)
     constructor(props) {
@@ -432,8 +510,6 @@ class CartIcon extends React.Component {
         )
     }
 }
-
-
 class Navbar extends React.Component {
     render() {
         return (
@@ -472,8 +548,6 @@ class Navbar extends React.Component {
         )
     }
 }
-
-
 class CartItem extends React.Component {
     constructor(props) {
         super(props)
@@ -530,8 +604,6 @@ class CartItem extends React.Component {
         )
     }
 }
-
-
 class RemoveCartItem extends React.Component {
     render() {
         return (
@@ -544,8 +616,6 @@ class RemoveCartItem extends React.Component {
         )
     }
 }
-
-
 class AddToCart extends React.Component {
     render() {
         return (
@@ -559,9 +629,6 @@ class AddToCart extends React.Component {
         )
     }
 }
-
-
-
 class Basket extends React.Component {
     render() {
         return (
@@ -587,12 +654,17 @@ class Shopping extends React.Component {
     async getProducts() {
         let products = [];
         try {
-            const response = await fetch("data/products.json");
+            //const response = await fetch("data/products.json");
+            const response = await fetch('http://localhost:5001/api/products')
+            if (response.ok) {
+                products = await response.json()
+            }
             products = await response.json();
+
         } catch (error) {
             console.log(error);
         } finally {
-            return products;
+            return products.data;
         }
     }
     /**
@@ -709,31 +781,31 @@ class App extends React.Component {
                     cart: cart,
 
                 });
-               //localStorage.setItem('cart', JSON.stringify(cart))
+                //localStorage.setItem('cart', JSON.stringify(cart))
             }
-        }else{
-            alert("out of stock");
+        } else {
+            // alert("out of stock");
         }
     }
 
-async componentDidMount (){
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    if(cart){
-        this.setState({
-            cart: cart,
-        })
+    async componentDidMount() {
+        const cart = JSON.parse(localStorage.getItem("cart"));
+        if (cart) {
+            this.setState({
+                cart: cart,
+            })
+        }
+
     }
-  
-}
 
 
-//componentDidUpdate(prevState){
- //   if(prevState.cart !==this.state.cart){
+    //componentDidUpdate(prevState){
+    //   if(prevState.cart !==this.state.cart){
 
-  //  }
-//localStorage.setItem('cart',JSON.stringify(cart))
-    
-//}
+    //  }
+    //localStorage.setItem('cart',JSON.stringify(cart))
+
+    //}
 
     handleIncrease = (product) => {
         if (product.qty >= 1) {
@@ -813,7 +885,7 @@ async componentDidMount (){
                             />
 
                         </Route>
-                        <Route path='/products/add'><AddProduct
+                        <Route path='/products/add'><ProductForm
                         //   onChange={this.HandleChange(event.target.value)}
                         /></Route>
                         {/*productdetails route*/}
@@ -833,6 +905,16 @@ async componentDidMount (){
                             />
                         </Route>
                         <Route path='/CartItem'>Cartitems</Route>
+                        
+                        <Route path='/products/edit/:id'>
+                            <ProductForm  action="edit"/>
+                        </Route>
+                        <Route path='/products/add'>
+                            <ProductForm  action="add"/>
+                        </Route>
+                        <Route path='/products/:id'>
+                            <ProductDetail onAddToCart={this.handleAddToCart }/>
+                        </Route>
 
 
                     </Switch>
